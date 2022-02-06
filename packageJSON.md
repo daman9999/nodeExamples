@@ -16,6 +16,6 @@ A)
  a) keeps all the details of modules installed 
 
  Q) node is single or multi threaded
- A) single threaded [ek time te ik hi command run karda] ,main thread block nahi hunda so faster aa
+ A) single threaded [ek time te ik hi command run karda] ,main thread block nahi hunda so faster aa and it is async
 
   
