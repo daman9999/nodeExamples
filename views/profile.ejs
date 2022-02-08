@@ -9,12 +9,22 @@
 </head>
 
 <body>
-    <%#  make the variable dynamic by %>
-        <p>You can use jinja like format</p>
-        <h1>Welcome ,
-            <%=user.name%>
+    <p> - is importtant in including files</p>
+    <%- include('common/header')%>
+        <%#  make the variable dynamic by %>
+            <p>You can use jinja like format</p>
+            <h1>Welcome ,
+                <%=user.name%>
+            </h1>
 
-        </h1>
+
+            <ul>
+                <%user.skills.forEach((item)=> {%>
+                    <li>
+                        <%=item%>
+                    </li>
+                    <% })%>
+            </ul>
 
 </body>
 

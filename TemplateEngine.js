@@ -9,7 +9,8 @@ app.set('view engine','ejs')
 app.get('/profile',(_,resp)=>{
     const user={
         name:"daman",
-        age:"22"  
+        age:"22" ,
+        skills:['php','laravel','node']
     }
 
     // ***render will render views and make user as param
