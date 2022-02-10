@@ -2,6 +2,15 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+// aplly on group of routes
+// import route from express
+const route = express.Router();
+
+
+
+
+
+
 // middleware
 // req,res we need to modify so it is there
 // next is a function it will proceed when route is called
@@ -28,16 +37,30 @@ const port = 3000
 
 
     // using the middleware
-// app.use(reqFilter)
+// app.use(reqFilter) 
 
 
-// single level example kisi marzi route te apply kr skde ho
-app.get('/', reqFilter,(req, res) => {
+// ---------------------------************************  
+// write the line here
+route.use(reqFilter)
+
+// -----------------------***************************
+
+
+
+// -----------------------**********************
+route.get('/', (req, res) => {
     res.send("welcome to homepage")
 })
+
+// ----------------------**********************
 
 app.get('/users', (req, res) => {
     res.send("welcome to users page")
 })
+
+//------------------*********************
+app.use('/',route);
+//--------------***********************
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
