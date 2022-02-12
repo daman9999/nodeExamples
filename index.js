@@ -1,60 +1,50 @@
-const mongoose = require('mongoose')
-const url = 'mongodb://localhost:27017/Tutorial'
+const express = require('express')
+require('./config');
+const Products = require('./Product');
+const app = express()
+const port = 3000
 
-// connect to mongo
-mongoose.connect(url)
-// schemas
-const ProductSchema = new mongoose.Schema({
-  name: String,
-  price: Number,
-  brand: String,
-  category: String
+
+
+
+
+app.use(express.json())
+app.post('/create',async(req,res)=>{
+  res.send("done")
+  console.log(req.body)
+  // store in database
+  let data =new Products(req.body)
+  let result = await data.save();
+  console.log(result)
+
 })
 
-const saveInDB = async () => {
-  const ProductModal = mongoose.model('videos', ProductSchema);
-  let data = new ProductModal({
-    name: 'm10',
-    price: 1000,
-    brand: 'samsung',
-    category: 'phone'
+
+
+app.get('/list',async(req,res)=>{
+  let data =  await Products.find();
+  res.send(data);
+
+})
+
+app.delete('/delete/:_id',async(req,res)=>{
+  console.log(req.params)
+  let data =  await Products.deleteOne(req.params);
+  res.send(data)
+      
+})
+
+
+app.put('/update/:_id',async(req,res)=>{
+  let data = await Products.updateOne(
+                        // set condition
+                      req.params,
+                        // set the updated data
+                      {$set:req.body})
+res.send(data)
   })
-  let res = await data.save()
-  console.log(res)
-}
-
-// ----------*******UPDATE*******--------------
-const updateInDB = async () => {
-  const ProductModal = mongoose.model('videos', ProductSchema)
-  let data = await ProductModal.updateOne(
-    { name: 'm40' },
-    {
-      $set: { name: 'm90' }
-    }
-  );
-  console.log(data)
-
-}
 
 
-// ----------*******DELETE*******--------------
-const deleteInDB = async () => {
-    const ProductModal = mongoose.model('videos', ProductSchema)
-    let data = await ProductModal.deleteOne(
-      { name: 'm10' },
-    );
-    console.log(data)
-  
-  }
-  
-  
-// ----------*******FIND*******--------------
-const findInDB = async () => {
-    const ProductModal = mongoose.model('videos', ProductSchema)
-    let data = await ProductModal.find({});
-    console.log(data)
-  
-  }
-  findInDB();
-  
-  
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
