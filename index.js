@@ -1,31 +1,9 @@
-const { response } = require('express');
-const express = require('express')
-const multer = require('multer');
-const app = express()
-const port = 3000
+const os = require('os');
 
-// upload is a middle-ware
-const upload = multer({
-  storage:multer.diskStorage({
-    // cb=>callback
-    destination:(req,file,cb)=>{
-      // upload is here folder name in cb
-        cb(null,"upload")
-    },
-    filename:(req,file,cb)=>{
-      // save the uploaded file with filename
-      const d = new Date();
-      cb(null,file.fieldname+"-"+`${d.getDate()}-${d.getMonth()}-${d.getFullYear()}[${d.getHours()}h${d.getMinutes()}m${d.getSeconds()}s]`+".jpg")
-    }
-  })
-  // telling that we are uploading only a single file (field name in thunderclient)
-}).single("user_file")
+console.log(os.arch())
+console.log(os.freemem()/(1024*1024*1024)+"  GB")
+console.log(os.totalmem()/(1024*1024*1024)+" GB")
+console.log(os.hostname())
+console.log(os.platform())
+console.log(os.userInfo())
 
-
-app.post('/upload',upload,async(req,res)=>{
-    res.send("uploading a file")
-})
-
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
